@@ -21,105 +21,154 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Global Styles */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
     
     .stApp {
-        background-color: #f3f2ef;
-        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fb;
+        font-family: 'Outfit', sans-serif;
     }
     
     /* Ensure text visibility */
-    h1, h2, h3, h4, h5, h6, .stMarkdown, p, li, label {
-        color: #000000 !important;
+    h1, h2, h3, h4, h5, h6, .stMarkdown, p, li, label, span {
+        color: #1d2226 !important;
     }
     
     .stDataFrame {
          border: 1px solid #e0e0e0;
-         border-radius: 8px;
+         border-radius: 12px;
+         background-color: white;
+         padding: 10px;
     }
 
     /* Header/Title */
     .header-container {
-        padding: 1.5rem;
-        border-bottom: 1px solid #e0e0e0;
-        margin-bottom: 1.5rem;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        padding: 2.5rem 2rem;
+        background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+        margin-bottom: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(10, 102, 194, 0.2);
+        color: white !important;
     }
     
     .header-title {
-        color: #0a66c2 !important;
-        font-size: 1.8rem;
+        color: white !important;
+        font-size: 2.4rem;
         font-weight: 700;
         margin: 0;
     }
     .header-subtitle {
-        color: #666666 !important;
-        font-size: 0.9rem;
-        margin-top: 5px;
+        color: rgba(255,255,255,0.9) !important;
+        font-size: 1.1rem;
+        margin-top: 10px;
     }
 
     /* Cards */
     .metric-card {
         background-color: #ffffff;
-        padding: 1.5rem;
-        border-radius: 8px;
+        padding: 1.5rem 1rem;
+        border-radius: 16px;
         border: 1px solid #e0e0e0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         text-align: center;
-        transition: transform 0.2s;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 1rem;
     }
     .metric-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        border-color: #0a66c2;
     }
     .metric-label {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
         color: #666666 !important;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
+        letter-spacing: 1.2px;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
     }
     .metric-value {
         font-size: 1.8rem;
         font-weight: 700;
         color: #0a66c2 !important;
+        word-break: break-word;
     }
 
     /* Job Card for Listing */
     .job-card {
         background-color: white;
-        padding: 15px;
-        border-radius: 8px;
+        padding: 20px;
+        border-radius: 16px;
         border: 1px solid #e0e0e0;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        transition: all 0.2s ease;
     }
-    .job-title { font-weight: 600; color: #0a66c2 !important; font-size: 1.1rem; }
-    .job-company { color: #191919 !important; font-weight: 500; }
-    .job-location { color: #666666 !important; font-size: 0.9rem; }
-    .job-meta { color: #666666 !important; font-size: 0.85rem; margin-top: 5px; }
+    .job-card:hover {
+        border-color: #0a66c2;
+        background-color: #f0f7ff;
+        box-shadow: 0 4px 12px rgba(10, 102, 194, 0.1);
+    }
+    .job-info { flex: 1; min-width: 0; padding-right: 15px; }
+    .job-title { 
+        font-weight: 700; 
+        color: #0a66c2 !important; 
+        font-size: 1.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .job-company { color: #1d2226 !important; font-weight: 600; margin-top: 2px; }
+    .job-meta { color: #666666 !important; font-size: 0.9rem; margin-top: 6px; font-weight: 400; }
+    
     .badge-opportunity {
-        background-color: #d1e7dd;
-        color: #0f5132 !important;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        font-weight: 600;
+        background: linear-gradient(135deg, #d1e7dd 0%, #a3cfbb 100%);
+        color: #0d5031 !important;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        flex-shrink: 0;
     }
     
-    /* Sidebar Fixes */
-    section[data-testid="stSidebar"] {
-        background-color: #ffffff;
-        border-right: 1px solid #e0e0e0;
+    /* Insight Message Styling */
+    .stAlert {
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
     }
-    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
-        color: #0a66c2 !important;
+    
+    /* Tab Styling */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 12px;
+        padding-bottom: 10px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: #ffffff;
+        border-radius: 10px !important;
+        border: 1px solid #e0e0e0 !important;
+        padding: 12px 24px !important;
+        font-weight: 600 !important;
+        color: #666666 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #0a66c2 !important;
+        color: white !important;
+        border-color: #0a66c2 !important;
+    }
+    
+    /* Plotly Container Fix */
+    .js-plotly-plot {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #f0f2f6;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -152,6 +201,12 @@ def load_data():
                 inv_norm_views = 1 - (df['views'] / max_views) 
                 df['opportunity_score'] = (norm_sal * 0.7) + (inv_norm_views * 0.3)
                 df['opportunity_score'] = df['opportunity_score'].round(2) * 100
+        
+        # Remote detection
+        if 'title' in df.columns:
+             df['is_remote'] = df['title'].str.contains('Remote|WFH|Anywhere', case=False, na=False) | \
+                              df['location'].str.contains('Remote', case=False, na=False)
+        
         return df
     except Exception as e:
         st.error(f"Error loading data: {e}")
@@ -182,6 +237,45 @@ def create_market_scatter(dataframe):
             return fig
     return None
 
+def get_market_insights(dataframe):
+    insights = []
+    if not dataframe.empty:
+        # Top Paying Role
+        if 'title' in dataframe.columns and 'normalized_salary' in dataframe.columns:
+            top_role = dataframe.groupby('title')['normalized_salary'].mean().idxmax()
+            top_val = dataframe.groupby('title')['normalized_salary'].mean().max()
+            insights.append(f"🔥 **{top_role}** is the highest paying role (${top_val:,.0f}).")
+        
+        # Remote Trend
+        if 'is_remote' in dataframe.columns and len(dataframe) > 0:
+            remote_pct = (dataframe['is_remote'].sum() / len(dataframe)) * 100
+            insights.append(f"🌐 **{remote_pct:.1f}%** of jobs are Remote/WFH.")
+            
+        # Competition
+        if 'views' in dataframe.columns:
+            high_comp_role = dataframe.groupby('title')['views'].median().idxmax()
+            insights.append(f"⚔️ **{high_comp_role}** has highest competition.")
+            
+    return insights
+
+def create_market_treemap(dataframe):
+    if not dataframe.empty and 'company_name' in dataframe.columns and 'title' in dataframe.columns:
+        # Group to avoid too many small boxes
+        df_group = dataframe.groupby(['company_name', 'title']).size().reset_index(name='count')
+        df_top = df_group.sort_values(by='count', ascending=False).head(40)
+        
+        fig = px.treemap(
+            df_top, 
+            path=['company_name', 'title'], 
+            values='count',
+            title='Market Hierarchy: Jobs by Company & Role',
+            color='count',
+            color_continuous_scale='GnBu'
+        )
+        fig.update_layout(font={'family': 'Outfit'})
+        return fig
+    return None
+
 def create_salary_dist(dataframe):
     if 'normalized_salary' in dataframe.columns and not dataframe.empty:
         # Safe drop
@@ -197,11 +291,92 @@ def create_salary_dist(dataframe):
             fig.update_layout(
                 plot_bgcolor="white",
                 paper_bgcolor="white",
-                font={'family': 'Roboto', 'color': '#333'},
+                font={'family': 'Outfit', 'color': '#333'},
                 xaxis_title="Salary ($)",
                 yaxis_title="Job Count"
             )
             return fig
+    return None
+
+def create_location_analysis(dataframe):
+    if 'location' in dataframe.columns and 'normalized_salary' in dataframe.columns:
+        loc_stats = dataframe.groupby('location').agg({
+            'normalized_salary': 'mean',
+            'job_id': 'count'
+        }).reset_index()
+        loc_stats = loc_stats.sort_values(by='normalized_salary', ascending=False).head(12)
+        
+        fig = px.bar(
+            loc_stats,
+            y='location',
+            x='normalized_salary',
+            orientation='h',
+            title='Top Paying Locations (Avg Salary)',
+            color='normalized_salary',
+            color_continuous_scale='Blues',
+            labels={'normalized_salary': 'Avg Salary ($)', 'location': 'Location'}
+        )
+        fig.update_layout(plot_bgcolor='white', font={'family': 'Outfit'})
+        return fig
+    return None
+
+def create_role_demand(dataframe):
+    if 'title' in dataframe.columns and 'views' in dataframe.columns:
+        role_stats = dataframe.groupby('title').agg({
+            'views': 'median',
+            'job_id': 'count'
+        }).reset_index()
+        # Filter roles with at least 5 jobs for better significance
+        role_stats = role_stats[role_stats['job_id'] > 2].sort_values(by='views', ascending=False).head(12)
+        
+        fig = px.bar(
+            role_stats,
+            y='title',
+            x='views',
+            orientation='h',
+            title='Most Competitive Roles (Median Views)',
+            color='views',
+            color_continuous_scale='Reds',
+            labels={'views': 'Median Views', 'title': 'Job Title'}
+        )
+        fig.update_layout(plot_bgcolor='white', font={'family': 'Outfit'})
+        return fig
+    return None
+
+def create_sentiment_gauge(dataframe):
+    if not dataframe.empty and 'normalized_salary' in dataframe.columns and 'views' in dataframe.columns:
+        avg_sal_norm = dataframe['normalized_salary'].mean() / dataframe['normalized_salary'].max() if dataframe['normalized_salary'].max() > 0 else 0
+        avg_views_norm = dataframe['views'].mean() / dataframe['views'].max() if dataframe['views'].max() > 0 else 0
+        
+        # High Salary + Low Views = Candidate Friendly (100)
+        # Low Salary + High Views = Employer Friendly (0)
+        sentiment_score = (avg_sal_norm * 0.5 + (1 - avg_views_norm) * 0.5) * 100
+        
+        fig = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = sentiment_score,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Market Sentiment Index", 'font': {'size': 18, 'family': 'Outfit'}},
+            gauge = {
+                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "darkblue"},
+                'bar': {'color': "#0a66c2"},
+                'bgcolor': "white",
+                'borderwidth': 2,
+                'bordercolor': "#e0e0e0",
+                'steps': [
+                    {'range': [0, 40], 'color': '#ffccd5'},
+                    {'range': [40, 70], 'color': '#fff3bf'},
+                    {'range': [70, 100], 'color': '#d1e7dd'}
+                ],
+                'threshold': {
+                    'line': {'color': "red", 'width': 4},
+                    'thickness': 0.75,
+                    'value': sentiment_score
+                }
+            }
+        ))
+        fig.update_layout(height=250, margin=dict(l=20, r=20, t=50, b=20), font={'family': 'Outfit'})
+        return fig
     return None
 
 def generate_html_report(dataframe, avg_s, med_v, t_loc):
@@ -345,6 +520,9 @@ avg_sal = 0 if pd.isna(avg_sal) else avg_sal
 med_views = df['views'].median() if not df.empty and 'views' in df.columns else 0
 med_views = 0 if pd.isna(med_views) else med_views
 
+max_sal = df['normalized_salary'].max() if not df.empty and 'normalized_salary' in df.columns else 0
+remote_count = df['is_remote'].sum() if 'is_remote' in df.columns else 0
+
 top_loc = "N/A"
 if not df.empty and 'location' in df.columns:
     v_locs = df['location'].dropna()
@@ -352,13 +530,24 @@ if not df.empty and 'location' in df.columns:
         top_loc = v_locs.mode()[0]
 
 # Display KPIs
-c1, c2, c3, c4 = st.columns(4)
+c1, c2, c3, c4, c5 = st.columns(5)
 c1.markdown(f"<div class='metric-card'><div class='metric-label'>Active Jobs</div><div class='metric-value'>{total_jobs:,}</div></div>", unsafe_allow_html=True)
-c2.markdown(f"<div class='metric-card'><div class='metric-label'>Avg. Salary</div><div class='metric-value'>${avg_sal:,.0f}</div></div>", unsafe_allow_html=True)
-c3.markdown(f"<div class='metric-card'><div class='metric-label'>Median Views</div><div class='metric-value'>{int(med_views)}</div></div>", unsafe_allow_html=True)
-c4.markdown(f"<div class='metric-card'><div class='metric-label'>Top Location</div><div class='metric-value'>{top_loc}</div></div>", unsafe_allow_html=True)
+c2.markdown(f"<div class='metric-card'><div class='metric-label'>Avg Salary</div><div class='metric-value'>${avg_sal:,.0f}</div></div>", unsafe_allow_html=True)
+c3.markdown(f"<div class='metric-card'><div class='metric-label'>Max Salary</div><div class='metric-value'>${max_sal:,.0f}</div></div>", unsafe_allow_html=True)
+c4.markdown(f"<div class='metric-card'><div class='metric-label'>Median Views</div><div class='metric-value'>{int(med_views)}</div></div>", unsafe_allow_html=True)
+c5.markdown(f"<div class='metric-card'><div class='metric-label'>Remote Jobs</div><div class='metric-value'>{remote_count}</div></div>", unsafe_allow_html=True)
 
-st.markdown("###")
+# New: Automated Insights Section
+st.markdown("### 💡 Market Pulse")
+insights = get_market_insights(df)
+if insights:
+    # Use columns with proper wrapping for insights
+    ins_cols = st.columns(3)
+    for i, insight in enumerate(insights):
+        with ins_cols[i % 3]:
+            st.info(insight)
+
+st.markdown("---")
 
 # Sidebar Export logic
 st.sidebar.markdown("### 📥 Export Report")
@@ -371,7 +560,7 @@ if not df.empty:
     st.sidebar.download_button("Download Full Report (HTML)", report_html, "market_report.html", "text/html")
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Dashboard", "⚔️ Market Battle", "🏆 Top Companies", "📈 Analytics", "📋 Raw Data"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🚀 Dashboard", "🌍 Market Map", "⚔️ Market Battle", "🏆 Top Companies", "📈 Benchmarks", "📋 Raw Data"])
 
 # TAB 1: DASHBOARD
 with tab1:
@@ -386,6 +575,12 @@ with tab1:
             st.plotly_chart(fig_matrix, use_container_width=True)
         else:
             st.info("No data available for Matrix.")
+        
+        # New: Sentiment Gauge
+        st.markdown("---")
+        fig_gauge = create_sentiment_gauge(df)
+        if fig_gauge:
+            st.plotly_chart(fig_gauge, use_container_width=True)
 
     with col_list:
         st.markdown("### 💎 Top 'Hidden Gems'")
@@ -394,16 +589,16 @@ with tab1:
         if 'opportunity_score' in df.columns:
             safe_opps = df.dropna(subset=['opportunity_score', 'normalized_salary', 'views'])
             if not safe_opps.empty:
-                top_opps = safe_opps.sort_values(by="opportunity_score", ascending=False).head(4)
+                top_opps = safe_opps.sort_values(by="opportunity_score", ascending=False).head(5)
                 for _, row in top_opps.iterrows():
                     st.markdown(f"""
                     <div class="job-card">
-                        <div style="flex:1;">
-                            <div class="job-title" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{row['title']}</div>
+                        <div class="job-info">
+                            <div class="job-title" title="{row['title']}">{row['title']}</div>
                             <div class="job-company">{row['company_name']}</div>
                             <div class="job-meta">💰 ${row['normalized_salary']:,.0f} | 👁 {int(row['views'])}</div>
                         </div>
-                        <div class="badge-opportunity" style="margin-left:10px;">{int(row['opportunity_score'])}/100</div>
+                        <div class="badge-opportunity">{int(row['opportunity_score'])}%</div>
                     </div>
                     """, unsafe_allow_html=True)
             else:
@@ -411,8 +606,33 @@ with tab1:
         else:
             st.info("Opportunity data missing.")
 
-# TAB 2: MARKET BATTLE
+# TAB 2: MARKET MAP
 with tab2:
+    st.markdown("### 🌍 Market Intelligence Map")
+    col_loc, col_dem = st.columns(2)
+    
+    with col_loc:
+        fig_loc = create_location_analysis(df)
+        if fig_loc:
+            st.plotly_chart(fig_loc, use_container_width=True)
+        else:
+            st.info("Location data unavailable.")
+            
+    with col_dem:
+        fig_dem = create_role_demand(df)
+        if fig_dem:
+            st.plotly_chart(fig_dem, use_container_width=True)
+        else:
+            st.info("Demand data unavailable.")
+    
+    st.markdown("---")
+    st.markdown("### 🔝 Market Breakdown")
+    fig_tree = create_market_treemap(df)
+    if fig_tree:
+        st.plotly_chart(fig_tree, use_container_width=True)
+
+# TAB 3: MARKET BATTLE
+with tab3:
     st.markdown("### ⚔️ Role Face-Off")
     st.caption("Compare two different job roles head-to-head.")
     
@@ -485,8 +705,8 @@ with tab2:
         else:
             st.warning("Not enough data found with the current filters to compare roles.")
 
-# TAB 3: TOP COMPANIES
-with tab3:
+# TAB 4: TOP COMPANIES
+with tab4:
     st.markdown("### 🏆 Top Companies by Opportunity")
     st.caption("Companies offering the best balance of **High Salary** and **Low Competition**. (Min. 3 listings)")
     
@@ -535,8 +755,8 @@ with tab3:
         else:
             st.info("Not enough data to rank companies (need companies with >1 job listing).")
 
-# TAB 4: ANALYTICS
-with tab4:
+# TAB 5: BENCHMARKS
+with tab5:
     st.markdown("### ⚖️ Salary Benchmarker")
     if 'title' in df.columns:
         top_titles = df['title'].value_counts().head(50).index.tolist()
@@ -571,6 +791,6 @@ with tab4:
                 else:
                     st.info("No data for histogram.")
 
-# TAB 5: RAW DATA
-with tab5:
+# TAB 6: RAW DATA
+with tab6:
     st.dataframe(df.sort_values(by='normalized_salary', ascending=False), use_container_width=True)

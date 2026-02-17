@@ -422,11 +422,9 @@ with tab2:
         if top_roles:
             col_b1, col_b2 = st.columns(2)
             with col_b1:
-                # Default to index 0 if valid
                 idx_a = 0 if len(top_roles) > 0 else None
                 role_a = st.selectbox("Role A", top_roles, index=idx_a, key="role_a")
             with col_b2:
-                # Default to index 1 if possible, else 0
                 idx_b = 1 if len(top_roles) > 1 else 0
                 role_b = st.selectbox("Role B", top_roles, index=idx_b, key="role_b")
                 
@@ -443,49 +441,49 @@ with tab2:
                 
                 count_a = len(df_a)
                 count_b = len(df_b)
+
+                # Visualization indented inside if block
+                c_comp1, c_comp2 = st.columns(2)
+                
+                with c_comp1:
+                    st.markdown(f"""
+                    <div class="metric-card" style="border-top: 4px solid #0a66c2;">
+                        <h3 style="margin:0; color:#0a66c2 !important;">{role_a}</h3>
+                        <div style="margin-top:10px;">
+                            <div class="metric-label">Avg Salary</div>
+                            <div class="metric-value" style="font-size:1.5rem;">${sal_a:,.0f}</div>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div class="metric-label">Median Views</div>
+                            <div class="metric-value" style="font-size:1.5rem;">{int(views_a)}</div>
+                        </div>
+                         <div style="margin-top:10px;">
+                            <div class="metric-label">Job Count</div>
+                            <div class="metric-value" style="font-size:1.5rem;">{count_a}</div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                with c_comp2:
+                    st.markdown(f"""
+                    <div class="metric-card" style="border-top: 4px solid #cf3c4f;">
+                        <h3 style="margin:0; color:#cf3c4f !important;">{role_b}</h3>
+                        <div style="margin-top:10px;">
+                            <div class="metric-label">Avg Salary</div>
+                            <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">${sal_b:,.0f}</div>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div class="metric-label">Median Views</div>
+                            <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">{int(views_b)}</div>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div class="metric-label">Job Count</div>
+                            <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">{count_b}</div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
         else:
             st.warning("Not enough data found with the current filters to compare roles.")
-            
-            # Visualization
-            c_comp1, c_comp2 = st.columns(2)
-            
-            with c_comp1:
-                st.markdown(f"""
-                <div class="metric-card" style="border-top: 4px solid #0a66c2;">
-                    <h3 style="margin:0; color:#0a66c2 !important;">{role_a}</h3>
-                    <div style="margin-top:10px;">
-                        <div class="metric-label">Avg Salary</div>
-                        <div class="metric-value" style="font-size:1.5rem;">${sal_a:,.0f}</div>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <div class="metric-label">Median Views</div>
-                        <div class="metric-value" style="font-size:1.5rem;">{int(views_a)}</div>
-                    </div>
-                     <div style="margin-top:10px;">
-                        <div class="metric-label">Job Count</div>
-                        <div class="metric-value" style="font-size:1.5rem;">{count_a}</div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-            with c_comp2:
-                st.markdown(f"""
-                <div class="metric-card" style="border-top: 4px solid #cf3c4f;">
-                    <h3 style="margin:0; color:#cf3c4f !important;">{role_b}</h3>
-                    <div style="margin-top:10px;">
-                        <div class="metric-label">Avg Salary</div>
-                        <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">${sal_b:,.0f}</div>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <div class="metric-label">Median Views</div>
-                        <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">{int(views_b)}</div>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <div class="metric-label">Job Count</div>
-                        <div class="metric-value" style="font-size:1.5rem; color:#cf3c4f !important;">{count_b}</div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
 
 # TAB 3: TOP COMPANIES
 with tab3:

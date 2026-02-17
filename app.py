@@ -170,13 +170,21 @@ st.markdown("""
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv("final_cleaned_jobs.csv")
+        # Load optimized parquet file first
+        if pd.io.common.file_exists("market_data.parquet"):
+            df = pd.read_parquet("market_data.parquet")
+        else:
+            # Fallback to CSV if parquet is missing
+            df = pd.read_csv("final_cleaned_jobs.csv")
+
+        # Ensure numeric types
         if 'normalized_salary' in df.columns:
             df['normalized_salary'] = pd.to_numeric(df['normalized_salary'], errors='coerce')
         if 'views' in df.columns:
             df['views'] = pd.to_numeric(df['views'], errors='coerce').fillna(0)
             
-        if 'normalized_salary' in df.columns and 'views' in df.columns:
+        # Feature Engineering: Opportunity Score (Only if not already in parquet)
+        if 'opportunity_score' not in df.columns and 'normalized_salary' in df.columns and 'views' in df.columns:
             max_sal = df['normalized_salary'].max()
             max_views = df['views'].max()
             if max_sal > 0 and max_views > 0:
@@ -185,8 +193,8 @@ def load_data():
                 df['opportunity_score'] = (norm_sal * 0.7) + (inv_norm_views * 0.3)
                 df['opportunity_score'] = df['opportunity_score'].round(2) * 100
         return df
-    except FileNotFoundError:
-        st.error("Data file 'final_cleaned_jobs.csv' not found.")
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
         return pd.DataFrame()
 
 def create_market_scatter(dataframe):

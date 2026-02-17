@@ -419,25 +419,32 @@ with tab2:
     if 'title' in df.columns:
         top_roles = df['title'].value_counts().head(50).index.tolist()
         
-        col_b1, col_b2 = st.columns(2)
-        with col_b1:
-            role_a = st.selectbox("Role A", top_roles, index=0, key="role_a")
-        with col_b2:
-            role_b = st.selectbox("Role B", top_roles, index=1, key="role_b")
-            
-        if role_a and role_b:
-            df_a = df[df['title'] == role_a]
-            df_b = df[df['title'] == role_b]
-            
-            # Metrics
-            sal_a = df_a['normalized_salary'].mean() if not df_a.empty else 0
-            sal_b = df_b['normalized_salary'].mean() if not df_b.empty else 0
-            
-            views_a = df_a['views'].median() if not df_a.empty else 0
-            views_b = df_b['views'].median() if not df_b.empty else 0
-            
-            count_a = len(df_a)
-            count_b = len(df_b)
+        if top_roles:
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                # Default to index 0 if valid
+                idx_a = 0 if len(top_roles) > 0 else None
+                role_a = st.selectbox("Role A", top_roles, index=idx_a, key="role_a")
+            with col_b2:
+                # Default to index 1 if possible, else 0
+                idx_b = 1 if len(top_roles) > 1 else 0
+                role_b = st.selectbox("Role B", top_roles, index=idx_b, key="role_b")
+                
+            if role_a and role_b:
+                df_a = df[df['title'] == role_a]
+                df_b = df[df['title'] == role_b]
+                
+                # Metrics
+                sal_a = df_a['normalized_salary'].mean() if not df_a.empty else 0
+                sal_b = df_b['normalized_salary'].mean() if not df_b.empty else 0
+                
+                views_a = df_a['views'].median() if not df_a.empty else 0
+                views_b = df_b['views'].median() if not df_b.empty else 0
+                
+                count_a = len(df_a)
+                count_b = len(df_b)
+        else:
+            st.warning("Not enough data found with the current filters to compare roles.")
             
             # Visualization
             c_comp1, c_comp2 = st.columns(2)

@@ -16,150 +16,110 @@ st.set_page_config(
 )
 
 # -------------------------------
-# 2. CUSTOM CSS (Enhanced UI)
+# 2. CUSTOM CSS (LinkedIn Theme)
 # -------------------------------
 st.markdown("""
 <style>
-    /* Import modern font */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    /* Global Styles */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
     
-    /* Base App Styles */
     .stApp {
-        background-color: #f4f5f7; /* Very light gray/blue */
-        font-family: 'Inter', sans-serif;
-        color: #172b4d !important;
+        background-color: #f3f2ef;
+        font-family: 'Roboto', sans-serif;
     }
     
-    p, h1, h2, h3, h4, h5, h6, li, label, .stMarkdown, .stDataFrame, .stRadio, .stMultiSelect {
-        color: #172b4d !important;
+    /* Ensure text visibility */
+    h1, h2, h3, h4, h5, h6, .stMarkdown, p, li, label {
+        color: #000000 !important;
+    }
+    
+    .stDataFrame {
+         border: 1px solid #e0e0e0;
+         border-radius: 8px;
     }
 
-    /* Header Styling */
+    /* Header/Title */
     .header-container {
-        padding: 1.5rem 2rem;
-        background: white;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        border-left: 6px solid #0a66c2; /* LinkedIn Blue Accent */
+        padding: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 1.5rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     
     .header-title {
         color: #0a66c2 !important;
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
         margin: 0;
-        letter-spacing: -0.5px;
     }
     .header-subtitle {
-        color: #5e6c84 !important;
-        font-size: 1rem;
-        margin-top: 0.5rem;
-        font-weight: 400;
+        color: #666666 !important;
+        font-size: 0.9rem;
+        margin-top: 5px;
     }
 
-    /* KPI Cards */
+    /* Cards */
     .metric-card {
-        background: white;
-        padding: 1.25rem;
-        border-radius: 12px;
-        border: 1px solid #dfe1e6;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        background-color: #ffffff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         text-align: center;
-        transition: all 0.3s ease;
-        height: 100%;
+        transition: transform 0.2s;
     }
     .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-        border-color: #0a66c2;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .metric-label {
-        font-size: 0.8rem;
-        color: #6b778c !important;
+        font-size: 0.85rem;
+        color: #666666 !important;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
+        letter-spacing: 0.5px;
         margin-bottom: 0.5rem;
+        font-weight: 500;
     }
     .metric-value {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #0a66c2 !important;
     }
 
-    /* Job Listing Cards */
+    /* Job Card for Listing */
     .job-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid #ebecf0;
-        margin-bottom: 1rem;
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .job-card:hover {
-        border-color: #0a66c2;
-        box-shadow: 0 4px 8px rgba(0,102,194,0.15);
-    }
-    .job-title { 
-        font-weight: 600; 
-        color: #0052cc !important; 
-        font-size: 1.1rem; 
-        margin-bottom: 0.25rem;
-    }
-    .job-company { 
-        color: #172b4d !important; 
-        font-weight: 500; 
-        font-size: 0.95rem;
-    }
-    .job-meta { 
-        color: #6b778c !important; 
-        font-size: 0.85rem; 
-        margin-top: 6px; 
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
+    .job-title { font-weight: 600; color: #0a66c2 !important; font-size: 1.1rem; }
+    .job-company { color: #191919 !important; font-weight: 500; }
+    .job-location { color: #666666 !important; font-size: 0.9rem; }
+    .job-meta { color: #666666 !important; font-size: 0.85rem; margin-top: 5px; }
     .badge-opportunity {
-        background-color: #e3fcef;
-        color: #006644 !important;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        display: inline-block;
-        min-width: 60px;
-        text-align: center;
-    }
-
-    /* Chart Containers */
-    .chart-container {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid #dfe1e6;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        margin-bottom: 2rem;
+        background-color: #d1e7dd;
+        color: #0f5132 !important;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
     }
     
-    /* Custom Scrollbar for nicer feel */
-    ::-webkit-scrollbar {
-        width: 8px;
+    /* Sidebar Fixes */
+    section[data-testid="stSidebar"] {
+        background-color: #ffffff;
+        border-right: 1px solid #e0e0e0;
     }
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #c1c7d0; 
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: #a5adba; 
+    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
+        color: #0a66c2 !important;
     }
 </style>
 """, unsafe_allow_html=True)
